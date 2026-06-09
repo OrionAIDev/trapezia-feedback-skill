@@ -1,0 +1,4 @@
+# Test dependencies for skill-template.
+# Install with: pip install -r tests/requirements.txt
+trapezia-skill-validator>=0.1.0
+pytest>=8.0

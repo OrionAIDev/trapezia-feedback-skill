@@ -1,0 +1,16 @@
+# Trapezia skill metadata and validator configuration.
+# See: https://github.com/OrionAIDev/trapezia-lab/blob/main/docs/superpowers/specs/2026-05-31-trapezia-disciplines-conformance-standard-design.md
+
+[skill]
+# Set to true if this skill handles personal, medical, financial, or credential data.
+# When true, the data.separation check runs against committed files.
+sensitive = false
+
+# Opt out of specific validator checks with a documented reason.
+# Opt-outs are RECORDED here — they are never silent.
+# Remove the example block below and add real entries as needed.
+#
+# Example:
+# [[skill.opt_outs]]
+# check = "hooks.crossplatform"
+# reason = "This skill is deployed only on Linux; no Windows users are expected."

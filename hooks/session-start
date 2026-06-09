@@ -1,0 +1,11 @@
+#!/usr/bin/env bash
+# session-start — runs at the beginning of each Claude Code session for this skill.
+#
+# Typical uses:
+#   - Activate a virtualenv:           source .venv/bin/activate
+#   - Export required env vars:        export MY_SKILL_CONFIG=/path/to/config
+#   - Print a reminder:                echo "Loaded <skill-name> session context"
+#
+# This stub does nothing. Replace with real setup commands.
+
+echo "session-start: no setup configured for this skill"

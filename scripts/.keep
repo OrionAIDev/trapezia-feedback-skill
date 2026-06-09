@@ -1,0 +1,7 @@
+# Placeholder — this directory exists so the skill is classified as T1 (code skill).
+#
+# For T1/T2 skills: replace this file with your executable scripts (*.py, *.sh, etc.).
+# For T0 (prompt-only) skills: delete this entire scripts/ directory.
+#
+# See conventions/python.md for Python style requirements.
+# See conventions/testing.md for test requirements on scripts.
