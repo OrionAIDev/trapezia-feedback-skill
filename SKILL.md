@@ -1,61 +1,38 @@
 ---
-name: skill-template
+name: trapezia-feedback-skill
 description: >-
-  Skeleton for a new Trapezia skill. Use when starting a new first-party
-  skill that must conform to the Trapezia disciplines conformance standard.
-  Provides the required directory layout, stub artifacts, self-tests, and
-  cross-platform hooks out of the box.
+  Cross-product user feedback channel for Trapezia bots — file bugs and
+  feature requests from Discord with mandatory PII scrubbing and explicit
+  user confirmation before each report is posted to the public
+  OrionAIDev/trapezia-feedback repo. Use when a Discord user expresses
+  bug or feature-request intent ("there's a bug", "I wish it could…")
+  and the bot should offer to file it. Cross-product — per-product
+  config supplies the product label and additional scrubber categories.
 ---
 
-# skill-template
+# trapezia-feedback-skill
 
-This is a **clone-source skeleton**. You should not load it as a Claude Code skill
-directly. Instantiate it with:
+Cross-product user feedback channel for Trapezia bots. Lets any Discord user (family member, customer, pilot participant) file a structured bug report or feature request that lands as a GitHub issue on the public `OrionAIDev/trapezia-feedback` repo — with PII and product-specific sensitive content scrubbed before posting, and explicit user confirmation as the safety gate.
 
-```bash
-gh repo create my-new-skill --template OrionAIDev/skill-template --clone
-cd my-new-skill
-```
+**Design spec:** see `2026-06-08-trapezia-feedback-skill-design.md` in `OrionAIDev/orion-cognition-labs-workspace`. This README is the operator quickstart; the spec is the contract.
 
-Or, without the GitHub CLI:
+## Quickstart
 
 ```bash
-cp -r /path/to/skill-template my-new-skill
-cd my-new-skill
-git init && git add . && git commit -m "chore: instantiate from skill-template"
-```
-
-## After instantiation — required renames
-
-1. **Rename the directory** to your skill's name (e.g., `mv skill-template my-new-skill`).
-2. **Update `SKILL.md` frontmatter:**
-   - `name:` must equal the directory name exactly (the `frontmatter.name` check enforces this).
-   - `description:` must be 40–500 characters and contain a "Use when …" trigger phrase
-     describing when Claude should invoke your skill.
-3. **Update `README.md`** with your skill's quickstart, design notes, and known limitations.
-4. **Update `CHANGELOG.md`** — add a `## [Unreleased]` entry describing what this skill does.
-5. **Update `.trapezia-skill.toml`** — set `sensitive = true` if your skill handles personal,
-   medical, financial, or credential data.
-6. **Delete `scripts/.keep`** and replace with real scripts (T1/T2 skills) or delete the
-   `scripts/` directory entirely if this is a T0 (prompt-only) skill.
-7. **Update `hooks/session-start`** and `hooks/session-start.cmd` with any setup your skill
-   needs on session start (source a venv, export env vars, etc.).
-8. **Update `NOTICE.md`** if you fork or vendor any third-party content. Delete it if you
-   do not.
-
-## Self-test
-
-After renaming, verify the template audits green:
-
-```bash
+# Install test dependencies (first time only)
 pip install -r tests/requirements.txt
+
+# Run the self-test suite (mocks the LLM + GitHub API at the boundaries)
 python -m pytest tests/ -v
 ```
 
-All tests must pass. The `test_structure.py` test imports `trapezia-skill-validator`
-and calls `run_audit()` against this directory — zero FAILs is the gate.
+## How it works (one-paragraph version)
 
-## Conventions
+When a Discord user expresses bug or feature-request intent, the consuming bot's LLM detects it and calls `feedback_draft.py` with the user's text + envelope (display name, product identifier, channel). The skill drafts a structured report, sends it through a clean-context LLM scrubber that redacts the configured categories (baseline PII + any product-specific categories), and shows the user a preview with an explicit "this will be PUBLIC on GitHub — confirm?" warning. On `file`, `feedback_file.py` posts to `OrionAIDev/trapezia-feedback` via a write-only PAT scoped to that one repo. On edit, the skill re-drafts and **re-scrubs** before showing the new preview — every preview is freshly scrubbed.
 
-See `conventions/` for the baseline git, Python, and testing conventions that all
-Trapezia skills follow.
+## Status
+
+- **Repo created:** 2026-06-09
+- **Initial release:** TBD (bootstrap in progress)
+- **Spec:** `OrionAIDev/orion-cognition-labs-workspace/documents/Trapezia/specs/2026-06-08-trapezia-feedback-skill-design.md`
+- **Companion repo:** `OrionAIDev/trapezia-feedback` (issues only — where the reports land)

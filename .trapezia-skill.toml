@@ -4,7 +4,7 @@
 [skill]
 # Set to true if this skill handles personal, medical, financial, or credential data.
 # When true, the data.separation check runs against committed files.
-sensitive = false
+sensitive = true   # handles user-supplied text in transit; scrubber output is public on github
 
 # Opt out of specific validator checks with a documented reason.
 # Opt-outs are RECORDED here — they are never silent.

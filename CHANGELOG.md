@@ -5,17 +5,20 @@ All notable changes documented here. Format per
 
 ## [Unreleased]
 
+### In progress
+
+- Initial bootstrap of the trapezia-feedback-skill repo from `OrionAIDev/skill-template`. Frontmatter, README, and SKILL.md customized to the spec. Stub script `scripts/feedback_draft.py` to anchor the T2 audit classification. Lib + tests + product configs to follow in subsequent commits.
+
+## [0.0.1] - 2026-06-09
+
 ### Added
 
-### Changed
-
-### Deprecated
-
-### Removed
-
-### Fixed
-
-### Security
+- Repository instantiated from `OrionAIDev/skill-template` (template v0.0.2).
+- `SKILL.md`: skill-specific frontmatter and description per spec §3.
+- `README.md`: rewritten as operator quickstart pointing at the design spec.
+- `VERSION` → `0.0.1` (this release).
+- `.trapezia-skill.toml`: `sensitive = true` (handles user-supplied text in transit; scrubber output goes to a public GitHub repo).
+- `scripts/feedback_draft.py`: stub anchor for T2 audit; real implementation in subsequent commits per design spec.
 
 ## [0.0.2] - 2026-06-01
 
